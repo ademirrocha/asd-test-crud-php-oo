@@ -1,6 +1,6 @@
 <?php 
     include  ($GLOBALS['PATH'] . '/views/layout/head.php');
-    //include  ($GLOBALS['PATH'] . '/views/layout/menu.php');
+    include  ($GLOBALS['PATH'] . '/views/layout/menu.php');
 ?>
     <div class="container">
         <div class="col-md-12">

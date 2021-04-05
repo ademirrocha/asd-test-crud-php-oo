@@ -7,12 +7,34 @@
                     <h3 class="panel-title">Login</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form" method="post" action="index.php">
+                    <form role="form" method="POST" action="/login">
                         <fieldset>
                             <div class="form-group">
+                                <?php 
+                                if(isset($_GET['errors'])):
+                                    $errors = json_decode($_GET['errors']);
+                                    if(isset($errors->email)):?>
+                                        <span class="text-danger">
+                                            <?=$errors->email?>
+                                        </span>
+                                    <?php 
+                                        endif;
+                                    endif;
+                                ?>
                                 <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
                             </div>
                             <div class="form-group">
+                                <?php 
+                                    if(isset($_GET['errors'])):
+                                        $errors = json_decode($_GET['errors']);
+                                        if(isset($errors->password)):?>
+                                            <span class="text-danger">
+                                                <?=$errors->password?>
+                                            </span>
+                                        <?php 
+                                        endif;
+                                    endif;
+                                ?>
                                 <input class="form-control" placeholder="Senha" name="senha" type="password">
                             </div>
                             <input type="submit" class="btn btn-lg btn-success btn-block" name="logar" value="logar">

@@ -3,6 +3,7 @@
 include "./vendor/Router.php";
 
 use classes\users\UserController;
+use classes\auth\AuthController;
 
 /**
  * -----------------------------------------------
@@ -18,9 +19,14 @@ Route::add('GET', '/', function(){
 });
 
 
+Route::add('GET', '/login', function(){
+    include('./classes/auth/AuthController.php');
+    AuthController::getLogin();
+});
+
 Route::add('POST', '/login', function(){
-    include('./views/login/index.php');
-   
+    include('./classes/auth/AuthController.php');
+    AuthController::postLogin();
 });
 
 Route::add('POST', '/logout', function(){

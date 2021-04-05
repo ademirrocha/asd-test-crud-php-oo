@@ -17,9 +17,9 @@ class ValidateHelper{
 
     function getValueParam($param, $type){
         
-        if($type == 'GET' && isset($_GET[$param])){
+        if($type == 'GET' && isset($_GET[$param]) && $_GET[$param] != ''){
             return $_GET[$param];
-        }else if($type == 'POST' && isset($_POST[$param])){
+        }else if($type == 'POST' && isset($_POST[$param]) && $_POST[$param] != ''){
             return $_POST[$param];
         }else{
             return null;
