@@ -13,24 +13,6 @@ use classes\requests\users\UpdateRequest;
 use classes\requests\users\DeleteRequest;
 use classes\requests\users\CreateRequest;
 
-function validatePassword($password, $hash){
-		
-	if (crypt($password, $hash) === $hash) {
-		echo 'Senha OK!';
-	} else {
-		echo 'Senha incorreta!';
-	}
-}
-
-function generate_salt($len = 8) {
-	$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`~!@#$%^&*()-=_+';
-	$l = strlen($chars) - 1;
-	$str = '';
-	for ($i = 0; $i<$len; ++$i) {
-		$str .= $chars[rand(0, $l)];
-	}
-	return $str;
-}
 
 class UserController {
 
@@ -137,33 +119,45 @@ class UserController {
 			$conn = Container::getDB();
 			$user = new User;
 			if(isset($_POST['password']) && ! empty($_POST['password']) ){
-				
+				$password = password_hash( $_POST['password'], PASSWORD_DEFAULT);
 				$user->setId($_POST['id'])
 					->setName($_POST['name'])
 					->setEmail($_POST['email'])
-					->setPassword(crypt( $_POST['password'] ));
+					->setPassword($password);
 			}else{
 				$user->setId($_POST['id'])
 					->setName($_POST['name'])
 					->setEmail($_POST['email']);
 			}
 			
+			$currentUser = new User;
+			$newCrud = new CrudUser($conn, $currentUser);
+			$currentUser = $newCrud->find($user->getId());
 
-			$crud = new CrudUser($conn, $user);
-			$update = $crud->update();
-			
-			if($update == 1){
-				$back .= '?id='.$_POST['id'].'&success=Dados Atualizados com sucesso!';
-			}else{
+			$isValidePassword = password_verify ( $_POST['old-password'] , $currentUser->getPassword() );
+			if($isValidePassword){
+
+				$crud = new CrudUser($conn, $user);
+				$update = $crud->update();
 				
-				if (strpos($update[2], 'Duplicate') !== false) {
-					
-					$messageError = ['Email' => 'Email já Cadastrado'];
+				if($update == 1){
+					$back .= '?id='.$_POST['id'].'&success=Dados Atualizados com sucesso!';
 				}else{
-					$messageError = ['Error' => $update];
+					
+					if (strpos($update[2], 'Duplicate') !== false) {
+						
+						$messageError = ['Email' => 'Email já Cadastrado'];
+					}else{
+						$messageError = ['Error' => $update];
+					}
+					$back .= '?id='.$_POST['id'].'&errors=' . json_encode($messageError) . '&name='. $_POST['name'] . '&email='. $_POST['email'];
 				}
+
+			}else{
+				$messageError = ['Senha' => 'Senha inválida. A senha deve ser a mesma deste usuário'];
 				$back .= '?id='.$_POST['id'].'&errors=' . json_encode($messageError) . '&name='. $_POST['name'] . '&email='. $_POST['email'];
 			}
+			
 		}
 		
 		header('Location: '.$back);

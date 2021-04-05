@@ -62,12 +62,12 @@
                                     <input type="password" name="password_confirmation" class="form-control" placeholder="Confirme a senha" />
                                 </div>
 
-                                <label class="control-label" >Senha Atual: </label>
+                                <label class="control-label" >Senha do Usuário: </label>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-key" aria-hidden="true"></i>
                                     </span>
-                                    <input type="password" name="old-password" class="form-control" placeholder="Digite sua senha senha atual" required/>
+                                    <input type="password" name="old-password" class="form-control" placeholder="Digite a senha deste usuário" required/>
                                 </div>
 
                                 <div class="form-group input-group col-sm-12">

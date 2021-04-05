@@ -13,8 +13,7 @@
             <ul class="nav navbar-nav">
             <li class="active"><a href="/users/create">Cadastrar Usuário</a></li>
             <li class="active"><a href="/users">Lista de Usuários</a></li>
-            <li class="active"><a href="/courses/create">Cadastrar Curso</a></li>
-            <li class="active"><a href="/courses">Lista de Cursos</a></li>
+            
             </ul>
         </div><!--/.nav-collapse -->
     </div>

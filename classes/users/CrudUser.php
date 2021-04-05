@@ -152,6 +152,7 @@ class CrudUser {
 				$user->setId($value['id'])
 					->setName($value['name'])
 					->setEmail($value['email'])
+					->setPassword($value['password'])
 					->setCreatedAt($value['created_at']);
 			}
 			
