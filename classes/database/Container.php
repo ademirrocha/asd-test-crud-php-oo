@@ -9,7 +9,25 @@ class Container {
 
 	public static function getDB(){
 		$env = env();
+		$jwsdb = getenv('JAWSDB_URL');
+		if( isset($env['JAWSDB_URL']) || $jwsdb != '' ){
+			
+			$dbparts = parse_url($jwsdb);
+
+			$hostname = $dbparts['host'];
+			$username = $dbparts['user'];
+			$password = $dbparts['pass'];
+			$database = ltrim($dbparts['path'],'/');
+		}else{
+			$hostname = $env['DB_HOST'];
+			$username = $env['DB_USERNAME'];
+			$password = $env['DB_PASSWORD'];
+			$database = $env['DB_DATABASE'];
+		}
+			
+
+			
 		
-		return new Database(getenv('DB_HOST'), getenv('DB_DATABASE'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
+		return new Database($hostname, $database, $username, $password);
 	}
 }
