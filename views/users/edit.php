@@ -9,6 +9,22 @@
                 <fieldset>
                     <legend>Atualizar dados do usuário.</legend>
                     <div class=" col-md-6 col-md-offset-3">
+                        <?php 
+                        if(isset($_GET['errors'])):
+                            $errors = json_decode($_GET['errors']);
+                            foreach($errors as $key => $error):?>
+                                <div class="alert alert-danger">
+                                <?php echo strtoupper($key) . ': '. ($error);?>
+                                </div>
+                        <?php 
+                            endforeach;
+                        endif;
+                        if(isset($_GET['success'])): ?>
+                            <div class="alert alert-success">
+                                <?php echo $_GET['success']; ?>
+                            </div>
+                        <?php endif;?>
+                    
                         <div class=" panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Usuário</h3>
@@ -27,7 +43,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                     </span>
-                                    <input type="email" name="email" class="form-control" value="<?= $user->getEmail(); ?>" required/>
+                                    <input type="text" name="email" class="form-control" value="<?= $user->getEmail(); ?>" required/>
                                 </div>
 
                                 <label class="control-label" >Senha: </label>
@@ -51,7 +67,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-key" aria-hidden="true"></i>
                                     </span>
-                                    <input type="password" name="old-password" class="form-control" placeholder="Digite sua senha senha atual" oninvalid="this.setCustomValidity('A senha atual é obrigatória!')" required/>
+                                    <input type="password" name="old-password" class="form-control" placeholder="Digite sua senha senha atual" required/>
                                 </div>
 
                                 <div class="form-group input-group">

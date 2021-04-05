@@ -3,13 +3,13 @@ namespace classes\users;
 require_once $GLOBALS['PATH'] . '/classes/users/User.php';
 require_once $GLOBALS['PATH'] . '/classes/users/CrudUser.php';
 include ($GLOBALS['PATH'] . '/classes/database/Container.php');
-include ($GLOBALS['PATH'] . '/classes/requests/users/GetFindRequest.php');
 
 use classes\database\Container;
 use classes\users\User;
 use classes\users\CrudUser;
 
 use classes\requests\users\GetFindRequest;
+use classes\requests\users\UpdateRequest;
 
 class UserController {
 
@@ -25,12 +25,13 @@ class UserController {
 	}
 
 	public function getFind(){
+		include ($GLOBALS['PATH'] . '/classes/requests/users/GetFindRequest.php');
+
 		$requests = new GetFindRequest;
 		$errors = $requests->validate();
 		if(count($errors) > 0){
-			;
 			$back = $_SERVER['HTTP_REFERER'] ?? '/';
-			header('Location: ' . $back . '?errors' . json_encode($errors));
+			header('Location: ' . $back . '?errors=' . json_encode($errors));
 		}else{
 			$conn = Container::getDB();
 			$user = new User;
@@ -56,13 +57,36 @@ class UserController {
 	}
 
 	public function update(){
-		$conn = Container::getDB();
-		$user = new User;
-		$user->setId(3)->setName("Ademir Rocha")->setEmail('exemplo@gmail.com')->setPassword(crypt('12345678'));
+		include ($GLOBALS['PATH'] . '/classes/requests/users/UpdateRequest.php');
 
-		$crud = new CrudUser($conn, $user);
-		echo "<pre>";
-			print_r($crud->update());
+		$requests = new UpdateRequest;
+		$errors = $requests->validate();
+		print_r($errors);
+		if(count($errors) > 0){
+			
+			$back = explode('?', $_SERVER['HTTP_REFERER'])[0] ?? '/users';
+			header('Location: ' . $back . '?id='.$_POST['id'].'&errors=' . json_encode($errors));
+		}else{
+			$conn = Container::getDB();
+			$user = new User;
+			if(isset($_POST['password']) && ! empty($_POST['password']) ){
+				
+				$user->setId($_POST['id'])
+					->setName($_POST['name'])
+					->setEmail($_POST['email'])
+					->setPassword(crypt( $_POST['password'] ));
+			}else{
+				$user->setId($_POST['id'])
+					->setName($_POST['name'])
+					->setEmail($_POST['email']);
+			}
+			
+
+			$crud = new CrudUser($conn, $user);
+			if($crud->update()){
+				header('Location: /users/find?id='.$_POST['id'].'&success=Dados Atualizados com sucesso');
+			}
+		}
 	}
 
 	public function delete(){

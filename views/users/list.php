@@ -7,6 +7,11 @@
             <fieldset>
                 <legend>USUÁRIOS CADASTRADOS</legend>
             </fieldset>
+            <?php if(isset($_GET['success'])): ?>
+                <div class="alert alert-success">
+                    <?php echo $_GET['success']; ?>
+                </div>
+            <?php endif;?>
         </div>
         <div class="col-sm-12">
 		<table>

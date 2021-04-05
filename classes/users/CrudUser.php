@@ -79,14 +79,22 @@ class CrudUser {
 			return false;
 		}
 
-		$sql = "UPDATE `users` set `name` = :name, `email` = :email, `password` = :password where `id` = :id";
-
+		if(! is_null($this->user->getPassword())){
+			$sql = "UPDATE `users` set `name` = :name, `email` = :email, `password` = :password where `id` = :id";
+		}else{
+			$sql = "UPDATE `users` set `name` = :name, `email` = :email where `id` = :id";
+		}
+		
 		$stmt = $this->db->prepare($sql);
 
 		$stmt->bindValue(':id', $this->user->getId());
 		$stmt->bindValue(':name', $this->user->getName());
 		$stmt->bindValue(':email', $this->user->getEmail());
-		$stmt->bindValue(':password', $this->user->getPassword());
+		if(! is_null($this->user->getPassword())){
+			$stmt->bindValue(':password', $this->user->getPassword());
+		}
+		
+			
 		
 		$result = $stmt->execute();
 
@@ -140,10 +148,13 @@ class CrudUser {
 			$value = $stmt->fetch(\PDO::FETCH_ASSOC);
 
 			$user = new User;
-			$user->setId($value['id'])
-				->setName($value['name'])
-				->setEmail($value['email'])
-				->setCreatedAt($value['created_at']);
+			if($value){
+				$user->setId($value['id'])
+					->setName($value['name'])
+					->setEmail($value['email'])
+					->setCreatedAt($value['created_at']);
+			}
+			
 			return $user;
 		}
 
