@@ -13,6 +13,7 @@ use classes\requests\users\UpdateRequest;
 use classes\requests\users\DeleteRequest;
 use classes\requests\users\CreateRequest;
 
+define("SALT", uniqid()); 
 
 class UserController {
 
@@ -72,7 +73,8 @@ class UserController {
 			$conn = Container::getDB();
 			$user = new User;
 			
-			$password = password_hash( $_POST['password'], PASSWORD_DEFAULT);
+			$password = crypt($_POST['password'], SALT);
+
 			$user->setName($_POST['name'])
 				->setEmail($_POST['email'])
 				->setPassword($password);
@@ -119,7 +121,7 @@ class UserController {
 			$conn = Container::getDB();
 			$user = new User;
 			if(isset($_POST['password']) && ! empty($_POST['password']) ){
-				$password = password_hash( $_POST['password'], PASSWORD_DEFAULT);
+				$password = crypt($_POST['password'], SALT);
 				$user->setId($_POST['id'])
 					->setName($_POST['name'])
 					->setEmail($_POST['email'])
