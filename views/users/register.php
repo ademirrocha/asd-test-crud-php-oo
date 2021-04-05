@@ -70,7 +70,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-key" aria-hidden="true"></i>
                                     </span>
-                                    <input type="password" value="teste" name="password_confirmation" class="form-control" placeholder="Confirme a senha" />
+                                    <input type="password" value="test" name="password_confirmation" class="form-control" placeholder="Confirme a senha" />
                                 </div>
 
                                 <div class="form-group input-group  col-sm-12">

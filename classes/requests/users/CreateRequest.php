@@ -26,8 +26,6 @@ class CreateRequest {
 
     public function messages($errors){
 
-        print_r($errors);
-
         $messages = array();
         foreach($errors as $key => $erro){
             
@@ -52,7 +50,7 @@ class CreateRequest {
                     $messages[$err[0]] = 'A confirmação da senha não coincide';
                 } 
                 
-                if($err[1] == 'unique'){
+                if($err[1] == 'unique' && $is_validate != 1){
                    
                     if(isset($messages[$err[0]])){
                         array_push($messages[$err[0]], ['Já existe um registro usando este']);

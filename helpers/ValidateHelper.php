@@ -88,10 +88,11 @@ class ValidateHelper{
 
         $data = $abstractGet->get($table, $key, $value);
         
-        if($data !== ''){
+        if(is_array($data) && isset($data['email']) && $data['email'] == $value){
+            echo '<br> Não Passou na validacao<br>';
             return false;
         }
-       
+        echo '<br> Passou na validacao<br>';
         return true;
     }
 
@@ -130,7 +131,7 @@ class ValidateHelper{
 
         if($ruleType[0] == 'unique'){
             
-            if(! $this->unique($key, $ruleType[1], $type)){
+            if($this->unique($key, $ruleType[1], $type) == false){
                 array_push($result, [$key.'.'.$ruleType[0] => false]);
             }
 
@@ -150,7 +151,7 @@ class ValidateHelper{
             }else{
                 $result = $this->resultValidate($rules, $key, $rule, $type, $result);
             }
-            print_r($result);
+           
 
         }
         return $result;

@@ -114,7 +114,6 @@ class UserController {
 			}
 			
 		}
-		
 		header('Location: ' . $back);
 	}
 
@@ -176,7 +175,7 @@ class UserController {
 
 		$requests = new DeleteRequest;
 		$errors = $requests->validate();
-		print_r($errors);
+		
 		if(count($errors) > 0){
 			if( isset($errors['id']) ){
 				$back = '/users?errors=' . json_encode(['id' => $errors['id']]);
