@@ -26,7 +26,7 @@ class UserController {
 		include($GLOBALS['PATH'] . '/views/users/list.php');
 	}
 
-	public function getFind(){
+	static public function getFind(){
 		include ($GLOBALS['PATH'] . '/classes/requests/users/GetFindRequest.php');
 
 		$requests = new GetFindRequest;
@@ -57,7 +57,7 @@ class UserController {
 		include($GLOBALS['PATH'] . '/views/users/register.php');
 	}
 
-	public function createPost(){
+	static public function createPost(){
 		include ($GLOBALS['PATH'] . '/classes/requests/users/CreateRequest.php');
 
 		$requests = new CreateRequest;
@@ -88,7 +88,7 @@ class UserController {
 		header('Location: ' . $back);
 	}
 
-	public function update(){
+	static public function update(){
 		include ($GLOBALS['PATH'] . '/classes/requests/users/UpdateRequest.php');
 
 		$requests = new UpdateRequest;
@@ -140,7 +140,7 @@ class UserController {
 		header('Location: '.$back);
 	}
 
-	public function delete(){
+	static public function delete(){
 
 		include ($GLOBALS['PATH'] . '/classes/requests/users/DeleteRequest.php');
 
