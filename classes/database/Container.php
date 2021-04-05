@@ -10,6 +10,6 @@ class Container {
 	public static function getDB(){
 		$env = env();
 		
-		return new Database(getenv('DB_HOST').':'.getenv('DB_PORT'), getenv('DB_DATABASE'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
+		return new Database(getenv('DB_HOST'), getenv('DB_DATABASE'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
 	}
 }
