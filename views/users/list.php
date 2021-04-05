@@ -7,7 +7,17 @@
             <fieldset>
                 <legend>USUÁRIOS CADASTRADOS</legend>
             </fieldset>
-            <?php if(isset($_GET['success'])): ?>
+            <?php 
+                if(isset($_GET['errors'])):
+                    $errors = json_decode($_GET['errors']);
+                    foreach($errors as $key => $error):?>
+                        <div class="alert alert-danger">
+                        <?php echo ($error);?>
+                        </div>
+                <?php 
+                    endforeach;
+                endif;
+                if(isset($_GET['success'])): ?>
                 <div class="alert alert-success">
                     <?php echo $_GET['success']; ?>
                 </div>
@@ -37,11 +47,14 @@
                             class="btn btn-warning btn-circle">
                             <i class="fa fa-pencil"></i>
                         </a>
-                        <a href='acao=deletar_usuario&id=<?=  $value->getId(); ?>'
+                        <a href='/users/delete'
                             class="btn btn-danger btn-circle"
-                            onclick='return confirm(\"Deseja realmente deletar?\")'>
+                            onclick="event.preventDefault(); document.getElementById('form-delete-user-<?=$value->getId();?>').submit();"
                             <i class="fa fa-trash-o"></i>
                         </a>
+                        <form id="form-delete-user-<?=$value->getId();?>" action="/users/delete" method="POST" style="display: none;">
+							<input type="hidden" name="id" value="<?=$value->getId();?>">
+						</form>
                     </td>
 				</tr>
                 <?php endforeach; ?>

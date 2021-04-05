@@ -11,62 +11,50 @@ use classes\users\UserController;
  */
 
 //define your route. This is main page route. for example www.example.com
-Route::add('/', function(){
+Route::add('GET', '/', function(){
 
     //define which page you want to display while user hit main page. 
     include('myindex.php');
 });
 
 
-// route for www.example.com/join
-Route::add('/join', function(){
-    include('/join.php');
-});
-
-
-Route::add('/login', function(){
+Route::add('POST', '/login', function(){
     include('./views/login/index.php');
    
 });
 
-Route::add('/forget', function(){
-    include('forget.php');
-});
-
-
-
-Route::add('/logout', function(){
+Route::add('POST', '/logout', function(){
     include('logout.php');
 });
 
-Route::add('/users', function(){
+Route::add('GET', '/users', function(){
     include('./classes/users/UserController.php');
     UserController::getAll();
     
 });
 
-Route::add('/users/find', function(){
+Route::add('GET', '/users/find', function(){
     include('./classes/users/UserController.php');
     UserController::getfind();
 });
 
-Route::add('/users/create', function(){
+Route::add('POST', '/users/create', function(){
     include('./classes/users/UserController.php');
     UserController::create();
 });
 
-Route::add('/users/update', function(){
+Route::add('POST', '/users/update', function(){
     include('./classes/users/UserController.php');
     UserController::update();
 });
 
-Route::add('/users/delete', function(){
+Route::add('POST', '/users/delete', function(){
     include('./classes/users/UserController.php');
     UserController::delete();
 });
 
-Route::add('/notFound', function(){
-    include('notFound.php');
+Route::add('GET', '/notFound', function(){
+    include('./notFound.php');
 });
 
 

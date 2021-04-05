@@ -19,8 +19,9 @@ class UpdateRequest {
     }
 
     public function validate(){
+        
         $errors = new ValidateHelper;
-        $errors = $errors->validateRules($this->rules());
+        $errors = $errors->validateRules($this->rules(), 'POST');
 
         return $this->messages($errors);
     }

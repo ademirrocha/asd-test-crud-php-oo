@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <form action="/users/update" method="post" class="">
+            <form action="/users/update" method="POST" class="">
                 <fieldset>
                     <legend>Atualizar dados do usuário.</legend>
                     <div class=" col-md-6 col-md-offset-3">

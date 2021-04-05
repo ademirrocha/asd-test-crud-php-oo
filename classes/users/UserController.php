@@ -10,6 +10,7 @@ use classes\users\CrudUser;
 
 use classes\requests\users\GetFindRequest;
 use classes\requests\users\UpdateRequest;
+use classes\requests\users\DeleteRequest;
 
 class UserController {
 
@@ -30,8 +31,13 @@ class UserController {
 		$requests = new GetFindRequest;
 		$errors = $requests->validate();
 		if(count($errors) > 0){
-			$back = $_SERVER['HTTP_REFERER'] ?? '/';
-			header('Location: ' . $back . '?errors=' . json_encode($errors));
+			if( isset($errors['id']) ){
+				$back = '/users?errors=' . json_encode(['id' => $errors['id']]);
+			}else{
+				$back = explode('?', $_SERVER['HTTP_REFERER'])[0] ?? '/users';
+				$back .= '?id='.$_POST['id'].'&errors=' . json_encode($errors);
+			}
+			header('Location: ' . $back);
 		}else{
 			$conn = Container::getDB();
 			$user = new User;
@@ -61,11 +67,16 @@ class UserController {
 
 		$requests = new UpdateRequest;
 		$errors = $requests->validate();
-		print_r($errors);
+		
 		if(count($errors) > 0){
 			
-			$back = explode('?', $_SERVER['HTTP_REFERER'])[0] ?? '/users';
-			header('Location: ' . $back . '?id='.$_POST['id'].'&errors=' . json_encode($errors));
+			if( isset($errors['id']) ){
+				$back = '/users?errors=' . json_encode(['id' => $errors['id']]);
+			}else{
+				$back = explode('?', $_SERVER['HTTP_REFERER'])[0] ?? '/users';
+				$back .= '?id='.$_POST['id'].'&errors=' . json_encode($errors);
+			}
+			//header('Location: ' . $back);
 		}else{
 			$conn = Container::getDB();
 			$user = new User;
@@ -90,11 +101,28 @@ class UserController {
 	}
 
 	public function delete(){
-		$conn = Container::getDB();
-		$user = new User;
-		$crud = new CrudUser($conn, $user);
-		echo "<pre>";
-			print_r($crud->delete(3));
+
+		include ($GLOBALS['PATH'] . '/classes/requests/users/DeleteRequest.php');
+
+		$requests = new DeleteRequest;
+		$errors = $requests->validate();
+		print_r($errors);
+		if(count($errors) > 0){
+			if( isset($errors['id']) ){
+				$back = '/users?errors=' . json_encode(['id' => $errors['id']]);
+			}else{
+				$back = explode('?', $_SERVER['HTTP_REFERER'])[0] ?? '/users';
+				$back .= '?id='.$_POST['id'].'&errors=' . json_encode($errors);
+			}
+			header('Location: ' . $back);
+		}else{
+			$conn = Container::getDB();
+			$user = new User;
+			$crud = new CrudUser($conn, $user);
+				if($crud->delete($_POST['id'])){
+					header('Location: /users?success=Usuário deletado com sucesso');
+				}
+		}
 	}
 
 	function validatePassword($password, $hash){

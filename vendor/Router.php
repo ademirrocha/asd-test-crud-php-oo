@@ -33,14 +33,14 @@ class Route
     * @param string $uri A path such as about/system
     * @param object $function An anonymous function
     */
-    static public function add($uri, $function)
+    static public function add($method, $uri, $function)
     {
-       
-        $uri = trim($uri, self::$_trim);
-        self::$_listUri[] = $uri;
-        self::$_listCall[] = $function;
-
-
+        if($_SERVER['REQUEST_METHOD'] == $method){
+            $uri = trim($uri, self::$_trim);
+            self::$_listUri[] = $uri;
+            self::$_listCall[] = $function;
+        }
+        
     }
 
     /**

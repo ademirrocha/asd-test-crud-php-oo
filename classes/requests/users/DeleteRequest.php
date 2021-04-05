@@ -3,18 +3,18 @@ namespace classes\requests\users;
 include $GLOBALS['PATH'] . '/helpers/ValidateHelper.php';
 use helpers\ValidateHelper;
 
-class GetFindRequest {
+class DeleteRequest {
 
     public function rules(){
         return [
             'id' => 'required',
-            'id' => 'exists:users'
+            'id' => 'exists:users',
         ];
     }
 
     public function validate(){
         $errors = new ValidateHelper;
-        $errors = $errors->validateRules($this->rules(), 'GET');
+        $errors = $errors->validateRules($this->rules(), 'POST');
 
         return $this->messages($errors);
     }
