@@ -16,7 +16,6 @@ Route::add('GET', '/', function(){
     header('Location: /users');
 });
 
-
 Route::add('GET', '/users', function(){
     include('./classes/users/UserController.php');
     UserController::getAll();
@@ -52,9 +51,9 @@ Route::add('GET', '/notFound', function(){
     include('./notFound.php');
 });
 
-
-
-
+function env(){
+    return parse_ini_file('.env');
+}
 
 //method for execution routes    
 Route::submit();
