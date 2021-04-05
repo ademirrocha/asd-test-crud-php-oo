@@ -44,12 +44,12 @@
 					<td data-label="DATA CADASTRO"><?= $value->getCreatedAt(); ?></td>
                     <td>
                         <a href='/users/find?id=<?= $value->getId(); ?>'
-                            class="btn btn-warning btn-circle">
+                            class="btn btn-success btn-elipse">
                             <i class="fa fa-pencil"></i>
                         </a>
                         <a href='/users/delete'
-                            class="btn btn-danger btn-circle"
-                            onclick="event.preventDefault(); document.getElementById('form-delete-user-<?=$value->getId();?>').submit();"
+                            class="btn btn-danger btn-elipse"
+                            onclick="event.preventDefault(); document.getElementById('form-delete-user-<?=$value->getId();?>').submit();">
                             <i class="fa fa-trash-o"></i>
                         </a>
                         <form id="form-delete-user-<?=$value->getId();?>" action="/users/delete" method="POST" style="display: none;">

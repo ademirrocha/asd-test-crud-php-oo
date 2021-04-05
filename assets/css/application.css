@@ -19,3 +19,8 @@ body{
 .panel-heading.bg-primary{
     background-color: #337ab7;
 }
+
+.btn-elipse{
+    padding: 3px 20px;
+    border-radius: 2rem;
+}

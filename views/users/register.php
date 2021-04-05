@@ -54,7 +54,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                     </span>
-                                    <input type="text" name="email" class="form-control" value="<?=$_GET['email'] ?? 'test'?>" placeholder="Digite o email" required/>
+                                    <input type="email" name="email" class="form-control" value="<?=$_GET['email'] ?? 'test'?>" placeholder="Digite o email" required/>
                                 </div>
 
                                 <label class="control-label" >Senha: </label>

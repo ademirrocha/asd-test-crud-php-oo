@@ -17,8 +17,10 @@
 
 		<!-- Custom CSS -->
 		<link href="/assets/css/template/sb-admin-2.css" rel="stylesheet">
-
+		
 		<!-- Custom Fonts -->
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    
 		<link rel="stylesheet" href="./assets/css/font/font-awesome/css/font-awesome.min.css">
 
 		

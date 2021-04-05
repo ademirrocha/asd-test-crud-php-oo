@@ -7,11 +7,9 @@ class UpdateRequest {
 
     public function rules(){
         return [
-            'id' => 'required',
-            'id' => 'exists:users',
+            'id' => ['required', 'exists:users'],
             'name' => 'required',
-            'email' => 'type:email',
-            'email' => 'required',
+            'email' => ['required', 'type:email'],
             'old-password' => 'required',
             'password_confirmation' => 'password_confirmation',
             'password' => 'correct_password'

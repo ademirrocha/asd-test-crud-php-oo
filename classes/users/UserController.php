@@ -77,7 +77,7 @@ class UserController {
 			if(is_int($save)){
 				$back .= '?success=Usuário cadastrado com sucesso!';
 			}else{
-				if (strpos($save[2], 'Duplicate') !== false) {
+				if (strpos($save[2], 'Duplicate') == true) {
 					$messageError = ['Email' => 'Email já Cadastrado'];
 				}else{
 					$messageError = ['Error' => $save];
@@ -93,16 +93,17 @@ class UserController {
 
 		$requests = new UpdateRequest;
 		$errors = $requests->validate();
-		
+		$back = explode('?', $_SERVER['HTTP_REFERER'])[0] ?? '/users/find';
 		if(count($errors) > 0){
 			
 			if( isset($errors['id']) ){
 				$back = '/users?errors=' . json_encode(['id' => $errors['id']]);
 			}else{
-				$back = explode('?', $_SERVER['HTTP_REFERER'])[0] ?? '/users';
+				
+				$back = explode('?', $_SERVER['HTTP_REFERER'])[0] ?? '/users/find';
 				$back .= '?id='.$_POST['id'].'&errors=' . json_encode($errors);
 			}
-			header('Location: ' . $back);
+			header('Location: '.$back);
 		}else{
 			$conn = Container::getDB();
 			$user = new User;
@@ -120,10 +121,23 @@ class UserController {
 			
 
 			$crud = new CrudUser($conn, $user);
-			if($crud->update()){
-				header('Location: /users/find?id='.$_POST['id'].'&success=Dados Atualizados com sucesso');
+			$update = $crud->update();
+			
+			if($update == 1){
+				$back .= '?id='.$_POST['id'].'&success=Dados Atualizados com sucesso!';
+			}else{
+				
+				if (strpos($update[2], 'Duplicate') !== false) {
+					
+					$messageError = ['Email' => 'Email já Cadastrado'];
+				}else{
+					$messageError = ['Error' => $update];
+				}
+				$back .= '?id='.$_POST['id'].'&errors=' . json_encode($messageError) . '&name='. $_POST['name'] . '&email='. $_POST['email'];
 			}
 		}
+		
+		header('Location: '.$back);
 	}
 
 	public function delete(){

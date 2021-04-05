@@ -54,7 +54,7 @@ class ValidateHelper{
         if(is_null($value)){
             return false;
         }
-        print_r(filter_var($value, FILTER_VALIDATE_EMAIL));
+        
         if(filter_var($value, FILTER_VALIDATE_EMAIL) == ''){
             return false;
         }
