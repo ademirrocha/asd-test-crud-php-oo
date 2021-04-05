@@ -13,6 +13,25 @@ use classes\requests\users\UpdateRequest;
 use classes\requests\users\DeleteRequest;
 use classes\requests\users\CreateRequest;
 
+function validatePassword($password, $hash){
+		
+	if (crypt($password, $hash) === $hash) {
+		echo 'Senha OK!';
+	} else {
+		echo 'Senha incorreta!';
+	}
+}
+
+function generate_salt($len = 8) {
+	$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`~!@#$%^&*()-=_+';
+	$l = strlen($chars) - 1;
+	$str = '';
+	for ($i = 0; $i<$len; ++$i) {
+		$str .= $chars[rand(0, $l)];
+	}
+	return $str;
+}
+
 class UserController {
 
 
@@ -62,29 +81,40 @@ class UserController {
 
 		$requests = new CreateRequest;
 		$errors = $requests->validate();
+		
 		$back = explode('?', $_SERVER['HTTP_REFERER'])[0] ?? '/users/create';
 		if(count($errors) > 0){
+			
 			$back .= '?errors=' . json_encode($errors) . '&name='. $_POST['name'] . '&email='. $_POST['email'];
 		}else{
 			$conn = Container::getDB();
 			$user = new User;
+			
+			$password = password_hash( $_POST['password'], PASSWORD_DEFAULT);
 			$user->setName($_POST['name'])
 				->setEmail($_POST['email'])
-				->setPassword(crypt( $_POST['password'] ));
-
+				->setPassword($password);
+		
 			$crud = new CrudUser($conn, $user);
-			$save = $crud->save();
-			if(is_int($save)){
-				$back .= '?success=Usuário cadastrado com sucesso!';
-			}else{
-				if (strpos($save[2], 'Duplicate') == true) {
-					$messageError = ['Email' => 'Email já Cadastrado'];
+			try {
+				$save = $crud->save();
+				if($save){
+					$back .= '?success=Usuário cadastrado com sucesso!';
 				}else{
-					$messageError = ['Error' => $save];
+					if (strpos($save[2], 'Duplicate') == true) {
+						$messageError = ['Email' => 'Email já Cadastrado'];
+					}else{
+						$messageError = ['Error' => 'Erro ao salvar usuario'];
+					}
+					$back .= '?errors=' . json_encode($messageError) . '&name='. $_POST['name'] . '&email='. $_POST['email'];
 				}
-				$back .= '?errors=' . json_encode($messageError) . '&name='. $_POST['name'] . '&email='. $_POST['email'];
+			} catch (\Throwable $th) {
+				//$messageError = ['Error' => 'Erro ao salvar usuario'];
+				//$back .= '?errors=' . json_encode($messageError) . '&name='. $_POST['name'] . '&email='. $_POST['email'];
 			}
+			
 		}
+		
 		header('Location: ' . $back);
 	}
 
@@ -165,24 +195,7 @@ class UserController {
 		}
 	}
 
-	function validatePassword($password, $hash){
-		
-		if (crypt($password, $hash) === $hash) {
-			echo 'Senha OK!';
-		} else {
-			echo 'Senha incorreta!';
-		}
-	}
-
-	function generate_salt($len = 8) {
-		$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`~!@#$%^&*()-=_+';
-		$l = strlen($chars) - 1;
-		$str = '';
-		for ($i = 0; $i<$len; ++$i) {
-			$str .= $chars[rand(0, $l)];
-		}
-		return $str;
-	}
+	
 
 	//validatePassword('12345678', $produto1->getPassword());
 

@@ -8,7 +8,7 @@ class CreateRequest {
     public function rules(){
         return [
             'name' => 'required',
-            'email' => ['required', 'type:email'],
+            'email' => ['required', 'type:email', 'unique:users'],
             'password_confirmation' => 'required',
             'password' => 'required',
             'password_confirmation' => 'password_confirmation',
@@ -25,9 +25,14 @@ class CreateRequest {
     }
 
     public function messages($errors){
+
+        print_r($errors);
+
         $messages = array();
         foreach($errors as $key => $erro){
+            
             foreach($erro as $index => $is_validate){
+
                 $err = explode('.', $index);
                 if($err[1] == 'required'){
                     $messages[$err[0]] = 'Obrigatório o envio do '. $err[0];
@@ -46,6 +51,16 @@ class CreateRequest {
                 if($err[1] == 'password_confirmation'){
                     $messages[$err[0]] = 'A confirmação da senha não coincide';
                 } 
+                
+                if($err[1] == 'unique'){
+                   
+                    if(isset($messages[$err[0]])){
+                        array_push($messages[$err[0]], ['Já existe um registro usando este']);
+                    }else{
+                        $messages[$err[0]] = ['Já existe um registro usando este'];
+                    }
+                   
+                }
                 
                 
             }

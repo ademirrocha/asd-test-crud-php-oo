@@ -79,6 +79,22 @@ class ValidateHelper{
         return true;
     }
 
+    function unique($key, $table, $type){
+        
+        $value = $this->getValueParam($key, $type);
+        
+        $conn = Container::getDB();
+        $abstractGet = new AbstractGetData($conn);
+
+        $data = $abstractGet->get($table, $key, $value);
+        
+        if($data !== ''){
+            return false;
+        }
+       
+        return true;
+    }
+
     function resultValidate($rules, $key, $rule, $type, $result){
         $ruleType = explode(':', $rule);
             
@@ -112,6 +128,14 @@ class ValidateHelper{
             }
         }
 
+        if($ruleType[0] == 'unique'){
+            
+            if(! $this->unique($key, $ruleType[1], $type)){
+                array_push($result, [$key.'.'.$ruleType[0] => false]);
+            }
+
+        }
+
         return $result;
     }
         
@@ -126,7 +150,7 @@ class ValidateHelper{
             }else{
                 $result = $this->resultValidate($rules, $key, $rule, $type, $result);
             }
-            
+            print_r($result);
 
         }
         return $result;
