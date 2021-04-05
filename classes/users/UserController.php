@@ -134,8 +134,8 @@ class UserController {
 			$newCrud = new CrudUser($conn, $currentUser);
 			$currentUser = $newCrud->find($user->getId());
 
-			$isValidePassword = password_verify ( $_POST['old-password'] , $currentUser->getPassword() );
-			if($isValidePassword){
+			
+			if(password_verify($_POST['old-password'], $currentUser->getPassword()) == true){
 
 				$crud = new CrudUser($conn, $user);
 				$update = $crud->update();
