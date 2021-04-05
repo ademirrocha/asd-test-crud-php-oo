@@ -5,7 +5,7 @@ require_once $GLOBALS['PATH'] . '/helpers/AbstractGetData.php';
 
 use helpers\AbstractGetData;
 use classes\database\Container;
-
+session_start();
 class ValidateHelper{
 
     function required($param, $type){

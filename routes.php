@@ -3,6 +3,7 @@
 include "./vendor/Router.php";
 
 use classes\users\UserController;
+use classes\auth\AuthController;
 
 /**
  * -----------------------------------------------
