@@ -16,7 +16,7 @@ use classes\requests\users\CreateRequest;
 class UserController {
 
 
-	public function getAll(){
+	static public function getAll(){
 		$conn = Container::getDB();
 		$user = new User;
 		$crud = new CrudUser($conn, $user);
@@ -53,7 +53,7 @@ class UserController {
 		
 	}
 
-	public function createGet(){
+	static public function createGet(){
 		include($GLOBALS['PATH'] . '/views/users/register.php');
 	}
 
