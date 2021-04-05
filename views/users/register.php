@@ -46,7 +46,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                                     </span>
-                                    <input type="text" name="name" class="form-control" value="<?=$_GET['name'] ?? 'test'?>" placeholder="Digite o nome" required/>
+                                    <input type="text" name="name" class="form-control" value="<?=$_GET['name'] ?? ''?>" placeholder="Digite o nome" required/>
                                 </div>
 
                                 <label class="control-label" >email: </label>
@@ -54,7 +54,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                     </span>
-                                    <input type="email" name="email" class="form-control" value="<?=$_GET['email'] ?? 'test'?>" placeholder="Digite o email" required/>
+                                    <input type="email" name="email" class="form-control" value="<?=$_GET['email'] ?? ''?>" placeholder="Digite o email" required/>
                                 </div>
 
                                 <label class="control-label" >Senha: </label>
@@ -62,7 +62,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-key" aria-hidden="true"></i>
                                     </span>
-                                    <input type="password" name="password" value="test" class="form-control" placeholder="Digite uma senha" />
+                                    <input type="password" name="password" value="" class="form-control" placeholder="Digite uma senha" />
                                 </div>
 
                                 <label class="control-label" >Confirmar Senha: </label>
@@ -70,7 +70,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-key" aria-hidden="true"></i>
                                     </span>
-                                    <input type="password" value="test" name="password_confirmation" class="form-control" placeholder="Confirme a senha" />
+                                    <input type="password" value="" name="password_confirmation" class="form-control" placeholder="Confirme a senha" />
                                 </div>
 
                                 <div class="form-group input-group  col-sm-12">
