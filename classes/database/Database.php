@@ -24,7 +24,7 @@ class Database implements InterfaceDatabase {
 		$this->charset = $charset;
 	}
 
-	static public function connect(){
+	public function connect(){
 		
 		try {
 			return new \PDO("mysql: host={$this->host}; dbname={$this->dbname}; charset={$this->charset}", $this->user, $this->senha);
