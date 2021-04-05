@@ -27,9 +27,9 @@ class Database implements InterfaceDatabase {
 	public function connect(){
 		
 		try {
-			$conn = new PDO("mysql:host=$this->host;dbname=$this->dbname", $this->user, $this->senha);
+			$conn = new \PDO("mysql:host=$this->host;dbname=$this->dbname", $this->user, $this->senha);
 			// set the PDO error mode to exception
-			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 			echo "Connected successfully";
 			return $conn;
 			//return new \PDO("mysqli: host={$this->host}; dbname={$this->dbname}; charset={$this->charset}", $this->user, $this->senha);
