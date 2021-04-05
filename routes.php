@@ -3,7 +3,6 @@
 include "./vendor/Router.php";
 
 use classes\users\UserController;
-use classes\auth\AuthController;
 
 /**
  * -----------------------------------------------
@@ -13,25 +12,10 @@ use classes\auth\AuthController;
 
 //define your route. This is main page route. for example www.example.com
 Route::add('GET', '/', function(){
-
-    //define which page you want to display while user hit main page. 
-    include('myindex.php');
+    include('./classes/users/UserController.php');
+    UserController::getAll();
 });
 
-
-Route::add('GET', '/login', function(){
-    include('./classes/auth/AuthController.php');
-    AuthController::getLogin();
-});
-
-Route::add('POST', '/login', function(){
-    include('./classes/auth/AuthController.php');
-    AuthController::postLogin();
-});
-
-Route::add('POST', '/logout', function(){
-    include('logout.php');
-});
 
 Route::add('GET', '/users', function(){
     include('./classes/users/UserController.php');
