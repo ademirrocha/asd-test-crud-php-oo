@@ -1,3 +1,21 @@
 body{
     margin-top: 80px;
 }
+
+
+.navbar-brand img{
+    width: 15rem !important;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.699);
+    top: -10px;
+    padding: 2px 40px;
+    border-radius: 3rem;
+}
+
+.panel-heading.bg-success{
+    background-color: #5cb85c;
+}
+
+.panel-heading.bg-primary{
+    background-color: #337ab7;
+}

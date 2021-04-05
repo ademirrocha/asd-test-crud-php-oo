@@ -13,8 +13,7 @@ use classes\auth\AuthController;
 
 //define your route. This is main page route. for example www.example.com
 Route::add('GET', '/', function(){
-    include('./classes/users/UserController.php');
-    UserController::getAll();
+    header('Location: /users');
 });
 
 
@@ -29,9 +28,14 @@ Route::add('GET', '/users/find', function(){
     UserController::getfind();
 });
 
+Route::add('GET', '/users/create', function(){
+    include('./classes/users/UserController.php');
+    UserController::createGet();
+});
+
 Route::add('POST', '/users/create', function(){
     include('./classes/users/UserController.php');
-    UserController::create();
+    UserController::createPost();
 });
 
 Route::add('POST', '/users/update', function(){

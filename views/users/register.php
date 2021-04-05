@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <form action="/users/update" method="POST" class="">
+            <form action="/users/create" method="POST" class="">
                 <fieldset>
                     <legend>Atualizar dados do usuário.</legend>
                     <div class=" col-md-6 col-md-offset-3">
@@ -14,7 +14,18 @@
                             $errors = json_decode($_GET['errors']);
                             foreach($errors as $key => $error):?>
                                 <div class="alert alert-danger">
-                                <?php echo strtoupper($key) . ': '. ($error);?>
+                                    <?php 
+                                    if(is_array($error)):
+                                        echo strtoupper($key) . ': ';
+                                        foreach($error as $err):
+                                             echo $err . '<br>';
+                                        endforeach;
+                                    else:
+                                        echo strtoupper($key) . ': '. ($error);
+                                    endif;
+                                    ?>
+                                        
+                                
                                 </div>
                         <?php 
                             endforeach;
@@ -26,7 +37,7 @@
                         <?php endif;?>
                     
                         <div class=" panel panel-default">
-                            <div class="panel-heading  bg-success">
+                            <div class="panel-heading bg-primary">
                                 <h3 class="panel-title">Usuário</h3>
                             </div>
                             <div class="panel-body">
@@ -35,7 +46,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                                     </span>
-                                    <input type="text" name="name" class="form-control" value="<?= $user->getName(); ?>" required/>
+                                    <input type="text" name="name" class="form-control" value="<?=$_GET['name'] ?? 'test'?>" placeholder="Digite o nome" required/>
                                 </div>
 
                                 <label class="control-label" >email: </label>
@@ -43,7 +54,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                     </span>
-                                    <input type="text" name="email" class="form-control" value="<?= $user->getEmail(); ?>" required/>
+                                    <input type="text" name="email" class="form-control" value="<?=$_GET['email'] ?? 'test'?>" placeholder="Digite o email" required/>
                                 </div>
 
                                 <label class="control-label" >Senha: </label>
@@ -51,7 +62,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-key" aria-hidden="true"></i>
                                     </span>
-                                    <input type="password" name="password" class="form-control" placeholder="Digite uma senha" />
+                                    <input type="password" name="password" value="test" class="form-control" placeholder="Digite uma senha" />
                                 </div>
 
                                 <label class="control-label" >Confirmar Senha: </label>
@@ -59,20 +70,11 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-key" aria-hidden="true"></i>
                                     </span>
-                                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirme a senha" />
+                                    <input type="password" value="teste" name="password_confirmation" class="form-control" placeholder="Confirme a senha" />
                                 </div>
 
-                                <label class="control-label" >Senha Atual: </label>
-                                <div class="form-group input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-key" aria-hidden="true"></i>
-                                    </span>
-                                    <input type="password" name="old-password" class="form-control" placeholder="Digite sua senha senha atual" required/>
-                                </div>
-
-                                <div class="form-group input-group col-sm-12">
-                                    <input type="hidden" name="id" value="<?= $user->getId(); ?>">
-                                    <input type="submit" name="acao" value="Salvar Alterações" class="btn btn-success   col-md-6 col-md-offset-3">
+                                <div class="form-group input-group  col-sm-12">
+                                    <input type="submit" name="acao" value="Salvar" class="btn btn-primary  col-md-6 col-md-offset-3">
                                 </div>
                             </div>
                         </div>

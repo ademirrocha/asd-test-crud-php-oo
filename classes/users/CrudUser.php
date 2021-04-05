@@ -42,7 +42,7 @@ class CrudUser {
 			echo "<pre>";
 				print_r($stmt->errorInfo());
 			echo "</pre>";
-			return false;
+			return $stmt->errorInfo();
 		} else {
 			return $this->db->lastInsertId();
 		}

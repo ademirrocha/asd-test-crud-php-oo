@@ -26,7 +26,8 @@ class ValidateHelper{
         }
     }
 
-    function password_confirmation($type){
+    function password_confirmation($rules, $type){
+  
         if(! is_null($this->getValueParam('password', $type)) && ! is_null($this->getValueParam('password_confirmation', $type)) ){
             if($this->getValueParam('password', $type) != $this->getValueParam('password_confirmation', $type)){
                 return false;
@@ -53,6 +54,7 @@ class ValidateHelper{
         if(is_null($value)){
             return false;
         }
+        print_r(filter_var($value, FILTER_VALIDATE_EMAIL));
         if(filter_var($value, FILTER_VALIDATE_EMAIL) == ''){
             return false;
         }
@@ -76,43 +78,55 @@ class ValidateHelper{
         }
         return true;
     }
+
+    function resultValidate($rules, $key, $rule, $type, $result){
+        $ruleType = explode(':', $rule);
+            
+        if($ruleType[0] == 'exists'){
+            if(!$this->exists($key, $ruleType[1], $type)){
+                array_push($result, [$key.'.'.$rule => true]);
+            }
+        }
+
+        if($ruleType[0] == 'type' && $ruleType[1] == 'email'){
+            if(!$this->is_email($key, $type)){
+                array_push($result, [$key.'.'.$rule => true]);
+            }
+        }
+
+        if($ruleType[0] == 'required'){
+            if(! $this->required($key, $type)){
+                array_push($result, [$key.'.'.$ruleType[0] => true]);
+            }
+        }
+
+        if($ruleType[0] == 'password_confirmation'){
+            if(! $this->password_confirmation($rules, $type)){
+                array_push($result, [$key.'.'.$ruleType[0] => true]);
+            }
+        }
+
+        if($ruleType[0] == 'correct_password'){
+            if(! $this->correct_password($key, $type)){
+                array_push($result, [$key.'.'.$ruleType[0] => true]);
+            }
+        }
+
+        return $result;
+    }
         
     function validateRules(array $rules, $type){
         $result = array();
-        $result = array();
         
         foreach($rules as $key => $rule){
-            $ruleType = explode(':', $rule);
-
-            if($ruleType[0] == 'exists'){
-                if(!$this->exists($key, $ruleType[1], $type)){
-                    array_push($result, [$key.'.'.$rule => true]);
+            if(is_array($rule)){
+                foreach($rule as $option){
+                    $result = $this->resultValidate($rules, $key, $option, $type, $result);
                 }
+            }else{
+                $result = $this->resultValidate($rules, $key, $rule, $type, $result);
             }
-
-            if($ruleType[0] == 'type' && $ruleType[1] == 'email'){
-                if(!$this->is_email($key, $type)){
-                    array_push($result, [$key.'.'.$rule => true]);
-                }
-            }
-
-            if($ruleType[0] == 'required'){
-                if(! $this->required($key, $type)){
-                    array_push($result, [$key.'.'.$ruleType[0] => true]);
-                }
-            }
-
-            if($ruleType[0] == 'password_confirmation'){
-                if(! $this->password_confirmation($type)){
-                    array_push($result, [$key.'.'.$ruleType[0] => true]);
-                }
-            }
-
-            if($ruleType[0] == 'correct_password'){
-                if(! $this->correct_password($key, $type)){
-                    array_push($result, [$key.'.'.$ruleType[0] => true]);
-                }
-            }
+            
 
         }
         return $result;
