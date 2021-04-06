@@ -28,8 +28,8 @@ class CreateRequest {
 
     //Cria as menssagens de erros
     public function messages($errors){
-
         $messages = array();
+
         foreach($errors as $key => $erro){
             
             foreach($erro as $index => $is_validate){
