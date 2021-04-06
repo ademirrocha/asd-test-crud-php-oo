@@ -39,3 +39,22 @@ Instalação em ambiente local
 
 * Abra o navegador e acesse [Projeto-php](http://localhost:8000)
 
+
+
+# Páginas que contem no projeto
+
+## Cadastro de Usuário
+
+![Cadastro de usuários](https://github.com/ademirrocha/asd-test-crud-php-oo/blob/main/examples/create-users.png)
+
+
+
+## Lista de Usuários Cadastrados
+
+![Listagem de usuários](https://github.com/ademirrocha/asd-test-crud-php-oo/blob/main/examples/list-users.png)
+
+
+
+## Editar Usuário
+
+![Editar usuário](https://github.com/ademirrocha/asd-test-crud-php-oo/blob/main/examples/update-users.png)

@@ -7,7 +7,7 @@
         <div class="col-sm-12">
             <form action="/users/create" method="POST" class="">
                 <fieldset>
-                    <legend>Cadastrar Novo Usuário.</legend>
+                    <legend>CADASTRAR NOVO USUÁRIO.</legend>
                     <div class=" col-md-6 col-md-offset-3">
                         <?php 
                         if(isset($_GET['errors'])):
