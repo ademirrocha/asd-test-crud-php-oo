@@ -27,7 +27,7 @@ Instalação em ambiente local
 
 ## Criação e configuração do DB
 
-* executar o [script.sql](https://github.com/ademirrocha/asd-test-crud-php-oo/blob/main/script.sql) no Mysql. Sugestão para usilizar o Client Mysql [HeidiSQL](https://www.heidisql.com/download.php) ou outro de sua preferência.
+* executar o [script.sql](https://github.com/ademirrocha/asd-test-crud-php-oo/blob/main/script.sql) no Mysql. Sugestão para utilizar o Client Mysql [HeidiSQL](https://www.heidisql.com/download.php) ou outro de sua preferência.
 
 * fazer um cópia do arquivo [.env.exemplo](https://github.com/ademirrocha/asd-test-crud-php-oo/blob/main/.env.exemplo) com o nome .env e setar as configurações de seu banco.
 
