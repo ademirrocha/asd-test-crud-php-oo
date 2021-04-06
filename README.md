@@ -51,7 +51,7 @@ Instalação em ambiente local
 
 ## Lista de Usuários Cadastrados
 
-![Listagem de usuários](https://github.com/ademirrocha/asd-test-crud-php-oo/blob/main/examples/list-users.png)
+![Listagem de usuários](https://github.com/ademirrocha/asd-test-crud-php-oo/blob/main/examples/lista-users.png)
 
 
 
