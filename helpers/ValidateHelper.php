@@ -8,6 +8,7 @@ use classes\database\Container;
 session_start();
 class ValidateHelper{
 
+    //metodo para validação de campos obrigatorios
     function required($param, $type){
         if( is_null($this->getValueParam($param, $type))){
             return false;
@@ -15,27 +16,38 @@ class ValidateHelper{
         return true;
     }
 
+    //metodo verificar se um campo é nulo
     function getValueParam($param, $type){
         
         if($type == 'GET' && isset($_GET[$param]) && $_GET[$param] != ''){
+            
             return $_GET[$param];
+            
         }else if($type == 'POST' && isset($_POST[$param]) && $_POST[$param] != ''){
+            
             return $_POST[$param];
+
         }else{
             return null;
         }
     }
 
+    //metodo para validar se as senha e a confirmação de senha são iguais
     function password_confirmation($rules, $type){
   
-        if(! is_null($this->getValueParam('password', $type)) && ! is_null($this->getValueParam('password_confirmation', $type)) ){
-            if($this->getValueParam('password', $type) != $this->getValueParam('password_confirmation', $type)){
+        if( !is_null($this->getValueParam('password', $type)) && 
+            !is_null($this->getValueParam('password_confirmation', $type)) 
+        ){
+            
+            if( $this->getValueParam('password', $type) != $this->getValueParam('password_confirmation', $type) ){
+                
                 return false;
             }
         }
         return true;
     }
 
+    //metodo para validar se o user enviou a senha correta
     function correct_password($param, $type){
         if(! is_null($this->getValueParam($param, $type))){
             if(isset($_SESSION['user'])){
@@ -49,6 +61,7 @@ class ValidateHelper{
         return true;  //Mudar para false quando implementar session
     }
 
+    //metodo para validar se um campo possui um email válido
     function is_email($param, $type){
         $value = $this->getValueParam($param, $type);
         if(is_null($value)){
@@ -61,6 +74,7 @@ class ValidateHelper{
         return true;
     }
 
+    //metodo para verificar se o valor de um campo está registrado no banco
     function exists($key, $table, $type){
         
         $value = $this->getValueParam($key, $type);
@@ -68,6 +82,7 @@ class ValidateHelper{
         if(is_null($value)){
             return false;
         }
+
         $conn = Container::getDB();
         $abstractGet = new AbstractGetData($conn);
 
@@ -76,9 +91,11 @@ class ValidateHelper{
         if($data == ''){
             return false;
         }
+
         return true;
     }
 
+    //metodo para validar campos do tipo unique
     function unique($key, $table, $type){
         
         $value = $this->getValueParam($key, $type);
@@ -96,6 +113,7 @@ class ValidateHelper{
         return true;
     }
 
+    //metodo para verificar o tipo de validação do campo
     function resultValidate($rules, $key, $rule, $type, $result){
         $ruleType = explode(':', $rule);
             
@@ -139,7 +157,8 @@ class ValidateHelper{
 
         return $result;
     }
-        
+    
+    //metodo de validação chamado nos arquivos de *Request
     function validateRules(array $rules, $type){
         $result = array();
         
@@ -151,9 +170,8 @@ class ValidateHelper{
             }else{
                 $result = $this->resultValidate($rules, $key, $rule, $type, $result);
             }
-           
-
         }
+
         return $result;
     }
 

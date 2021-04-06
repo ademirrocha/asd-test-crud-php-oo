@@ -15,7 +15,7 @@ class CrudUser {
 		$this->user = $user;
 	}
 
-
+	//metodo que salva um novo usuario
 	public function save(){
 		
 		$sql = "INSERT INTO `users` (
@@ -49,6 +49,7 @@ class CrudUser {
 
 	}
 
+	//metodo que deleta um usuario
 	public function delete(int $id){
 		
 		$id = filter_var($id, FILTER_VALIDATE_INT);
@@ -71,10 +72,11 @@ class CrudUser {
 		}
 	}
 
-
+	//metodo que salva alterações de um usuario
 	public function update(){
 				
 		$id = filter_var($this->user->getId(), FILTER_VALIDATE_INT);
+
 		if($id === 0 && !is_int($id) && $id <= 0 && !$id){
 			return false;
 		}
@@ -94,8 +96,6 @@ class CrudUser {
 			$stmt->bindValue(':password', $this->user->getPassword());
 		}
 		
-			
-		
 		$result = $stmt->execute();
 
 		if(!$result){
@@ -109,7 +109,7 @@ class CrudUser {
 
 	}
 
-
+	//metodo que retorna todos os usuarios
 	public function all(){
 		$sql = "SELECT * FROM `users`";
 
@@ -129,8 +129,7 @@ class CrudUser {
 		return $users;
 	}
 
-
-
+	//metodo que busca um determinado usuario
 	public function find(int $id){
 		
 		$id = filter_var($id, FILTER_VALIDATE_INT);

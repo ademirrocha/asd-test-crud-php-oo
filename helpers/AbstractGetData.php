@@ -11,7 +11,7 @@ class AbstractGetData {
 		$this->db = $db->connect();
 	}
 
-
+	//methodo abstrato para buscar dados no banco para validação
 	public function get($table, $column, $value){
 		
 		$sql = "SELECT * FROM `$table` where $column = :$column";
@@ -19,12 +19,17 @@ class AbstractGetData {
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue(':'.$column, $value);
 		$result = $stmt->execute();
+
 		if(!$result){
+
 			echo "<pre>";
 				print_r($stmt->errorInfo());
 			echo "<;pre>";
+
 			return false;
-		} else {
+
+		}else {
+
 			$data = $stmt->fetch(\PDO::FETCH_ASSOC);
 			return $data;
 		}
